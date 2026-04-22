@@ -2,6 +2,13 @@
 
 A lightweight lead management web app designed to solve a common problem in consulting teams: lost leads, missed follow-ups, and lack of pipeline visibility.
 
+## Development Stats
+
+* **Total Development Time:** 3 hours 49 minutes
+* **Commits:** 27
+* **Period:** April 21, 2026 (23:30) → April 22, 2026 (03:19)
+* **Status:** ✅ Production-ready
+
 ## Built With
 
 * **Next.js 16** with TypeScript and Tailwind CSS
@@ -13,13 +20,16 @@ A lightweight lead management web app designed to solve a common problem in cons
 
 * **Kanban pipeline:** Visualize and manage leads across 5 stages (New → Contacted → Proposal Sent → Closed Won → Lost)
 * **Lead management:** Create, edit, and update leads with essential contact information
+* **Seller assignment:** Assign leads to one of three sellers (Seller_1, Seller_2, Seller_3) for team collaboration
+* **Seller filters:** Filter leads by assigned seller across both Kanban and Table views (filter persists between views)
 * **Actionable metrics:**
 
   * Total leads
   * Leads by status
   * Conversion rate
   * Inactive leads (to prevent missed follow-ups)
-* **Table view:** Alternative list view for quick scanning and editing
+* **Table view:** Alternative list view with seller column for quick scanning and editing
+* **Dual-view interface:** Switch between Kanban and Table views with synchronized data
 
 ## Key Design Decisions
 
