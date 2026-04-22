@@ -1,5 +1,25 @@
 # AI-LOG — Development Iteration Log
 
+## [Commit TBD] — Add seller assignment field to leads
+
+**Prompt:** Implement seller assignment functionality by adding a `seller` field to leads table. Add dropdown in LeadForm to select between Seller_1, Seller_2, Seller_3. Update database schema, API routes, types, and table view to display seller information.
+
+**Result:** 
+- Added `seller` column to Supabase leads table via SQL migration (ALTER TABLE leads ADD COLUMN seller text)
+- Updated `Lead` interface with new `seller: Seller | null` field and `Seller` type definition
+- Extended LeadForm to include seller dropdown with three options (Seller_1, Seller_2, Seller_3)
+- Updated API POST route to accept and store seller field
+- Updated API PATCH route to support seller field updates
+- Added seller column to leads table view with dash fallback for null values
+- Form state now manages seller selection alongside other lead fields
+- Backfilled all existing leads with Seller_1 in database
+
+All three sellers now available for assignment when creating or editing leads. Existing leads default to Seller_1.
+
+**Adjustment:** No adjustment needed. SQL migration executed, database backfilled, code complete and ready for testing.
+
+---
+
 ## [Commit 9f6b1a1] — Remove duplicate 'SouthDesk CRM' title from kanban header
 
 **Prompt:** Remove the duplicate "SouthDesk CRM" h1 title from KanbanBoard header since it already exists in CRMViewSwitcher header. Keep the action buttons (+ New Lead, View All).

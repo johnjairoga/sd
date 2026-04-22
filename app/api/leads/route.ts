@@ -24,7 +24,7 @@ export async function GET() {
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { name, company, phone, email, source, status = 'new' } = body;
+    const { name, company, phone, email, source, status = 'new', seller } = body;
 
     if (!name) {
       return NextResponse.json(
@@ -43,6 +43,7 @@ export async function POST(request: NextRequest) {
           email,
           source,
           status,
+          seller,
         },
       ])
       .select();

@@ -8,7 +8,7 @@ export async function PATCH(
   try {
     const { id } = await params;
     const body = await request.json();
-    const { name, company, phone, email, source, status } = body;
+    const { name, company, phone, email, source, status, seller } = body;
 
     const { data, error } = await supabase
       .from('leads')
@@ -19,6 +19,7 @@ export async function PATCH(
         ...(email !== undefined && { email }),
         ...(source !== undefined && { source }),
         ...(status && { status }),
+        ...(seller !== undefined && { seller }),
         updated_at: new Date().toISOString(),
       })
       .eq('id', id)

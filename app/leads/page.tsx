@@ -106,6 +106,7 @@ export default function LeadsPage() {
                   <th className="px-6 py-3 text-left text-sm font-semibold text-white">Email</th>
                   <th className="px-6 py-3 text-left text-sm font-semibold text-white">Phone</th>
                   <th className="px-6 py-3 text-left text-sm font-semibold text-white">Source</th>
+                  <th className="px-6 py-3 text-left text-sm font-semibold text-white">Seller</th>
                   <th className="px-6 py-3 text-left text-sm font-semibold text-white">Status</th>
                   <th className="px-6 py-3 text-left text-sm font-semibold text-white">Actions</th>
                 </tr>
@@ -118,6 +119,7 @@ export default function LeadsPage() {
                     <td className="px-6 py-4 text-sm text-gray-400">{lead.email}</td>
                     <td className="px-6 py-4 text-sm text-gray-400">{lead.phone}</td>
                     <td className="px-6 py-4 text-sm text-gray-400">{lead.source}</td>
+                    <td className="px-6 py-4 text-sm text-gray-400">{lead.seller || '-'}</td>
                     <td className="px-6 py-4 text-sm">
                       <span className="rounded-full bg-blue-500/20 px-3 py-1 text-xs font-semibold text-blue-300 border border-blue-500/30">
                         {lead.status.replace(/_/g, ' ')}

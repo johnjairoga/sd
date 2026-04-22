@@ -1,6 +1,6 @@
 'use client';
 
-import { Lead, LeadStatus } from '@/types/lead';
+import { Lead, LeadStatus, Seller } from '@/types/lead';
 import { useState } from 'react';
 
 interface LeadFormProps {
@@ -11,6 +11,7 @@ interface LeadFormProps {
 
 const STATUS_OPTIONS: LeadStatus[] = ['new', 'contacted', 'proposal_sent', 'closed_won', 'lost'];
 const SOURCE_OPTIONS = ['Website', 'Referral', 'LinkedIn', 'Cold Call', 'Other'];
+const SELLER_OPTIONS: Seller[] = ['Seller_1', 'Seller_2', 'Seller_3'];
 
 export default function LeadForm({ initialData, onSubmit, isLoading }: LeadFormProps) {
   const [formData, setFormData] = useState({
@@ -20,6 +21,7 @@ export default function LeadForm({ initialData, onSubmit, isLoading }: LeadFormP
     email: initialData?.email || '',
     source: initialData?.source || '',
     status: initialData?.status || 'new',
+    seller: initialData?.seller || '',
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
@@ -110,6 +112,21 @@ export default function LeadForm({ initialData, onSubmit, isLoading }: LeadFormP
             <option key={status} value={status} className="bg-[#1c1c1c] text-white">
               {status.replace(/_/g, ' ').charAt(0).toUpperCase() + status.replace(/_/g, ' ').slice(1)}
             </option>
+          ))}
+        </select>
+      </div>
+
+      <div>
+        <label className="block text-sm font-medium text-gray-300">Seller</label>
+        <select
+          name="seller"
+          value={formData.seller}
+          onChange={handleChange}
+          className="mt-1 w-full rounded border border-[#333333] bg-[#1c1c1c] px-3 py-2 text-white focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+        >
+          <option value="" className="bg-[#1c1c1c] text-white">Select seller</option>
+          {SELLER_OPTIONS.map(seller => (
+            <option key={seller} value={seller} className="bg-[#1c1c1c] text-white">{seller}</option>
           ))}
         </select>
       </div>
