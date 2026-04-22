@@ -1,5 +1,27 @@
 # AI-LOG — Development Iteration Log
 
+## [Commit db82b59] — Add table view alongside kanban with shared data source
+
+**Prompt:** Add a CRM List View (Table View) alongside existing Kanban WITHOUT breaking Kanban functionality. Both views must consume same single source of truth. Keep Kanban logic untouched. Safe, production-grade approach.
+
+**Result:** Implemented dual-view CRM interface with shared data architecture:
+- Created `useLeadsData.ts` hook: extracts fetch/mutation logic, manages single shared state
+- Created `TableView.tsx`: read-only table display (Name, Company, Email, Phone, Source, Status, Added date) with dark theme
+- Created `CRMViewSwitcher.tsx`: wrapper component managing view toggle + shared state, maintains edit/delete modal for both views
+- Modified `KanbanBoard.tsx` minimally: now accepts optional `leads`, `isLoading`, `onLeadsChange` props for shared state (backward compatible)
+- Updated `app/page.tsx`: routes through CRMViewSwitcher
+
+Key guarantees met:
+✓ Single source of truth: both views read from identical leads state in hook
+✓ Auto-sync across views: state persists when switching, no reset or data loss
+✓ Kanban untouched: drag-drop, status updates, logic all unchanged
+✓ No duplicate data/APIs: all mutations through shared hook
+✓ Production safe: minimal necessary changes, fully backward compatible
+
+**Adjustment:** No adjustment needed. Both views tested, toggle works seamlessly, no compilation errors.
+
+---
+
 ## [Commit 8cad5aa] — Implement Xan dark theme with glassmorphic design
 
 **Prompt:** Apply Xan design system with dark theme (#161616 background, #1c1c1c cards, #222222 borders), Google Fonts (Outfit + JetBrains Mono), glasmorphic effects, and spotlight animations. Work in feature branch, test in dev, then merge to main.
