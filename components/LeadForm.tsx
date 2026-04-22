@@ -24,7 +24,7 @@ interface FormData {
 }
 
 export default function LeadForm({ initialData, onSubmit, isLoading }: LeadFormProps) {
-  const [formData, setFormData] = useState<FormData>({
+  const [formData, setFormData] = useState({
     name: initialData?.name || '',
     company: initialData?.company || '',
     phone: initialData?.phone || '',
@@ -41,15 +41,16 @@ export default function LeadForm({ initialData, onSubmit, isLoading }: LeadFormP
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    await onSubmit({
+    const submitData: Partial<Lead> = {
       name: formData.name,
       company: formData.company,
       phone: formData.phone,
       email: formData.email,
       source: formData.source,
-      status: formData.status,
-      seller: (formData.seller as Seller) || null,
-    } as Partial<Lead>);
+      status: formData.status as LeadStatus,
+      seller: (formData.seller as Seller | '') || null,
+    };
+    await onSubmit(submitData);
   };
 
   return (
