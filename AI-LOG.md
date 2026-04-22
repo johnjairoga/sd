@@ -1,5 +1,20 @@
 # AI-LOG — Development Iteration Log
 
+## [Commit d3f629f] — Add seller column to table view
+
+**Prompt:** Add a seller column to TableView component to display assigned seller for each lead.
+
+**Result:**
+- Added "Seller" column header to table (positioned after Source, before Status)
+- Added seller data cell displaying `lead.seller` or dash (—) for unassigned leads
+- Maintains existing styling consistency with other text columns
+
+Minimal change (2 insertions) with zero impact to component logic. Table view now shows all vendor assignments alongside other lead information.
+
+**Adjustment:** No adjustment needed. Change is isolated to UI display, no logic or data flow modifications.
+
+---
+
 ## [Commit 5403845] — Add seller assignment field to leads
 
 **Prompt:** Implement seller assignment functionality by adding a `seller` field to leads table. Add dropdown in LeadForm to select between Seller_1, Seller_2, Seller_3. Update database schema, API routes, types, and table view to display seller information.
