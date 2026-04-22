@@ -31,15 +31,15 @@ export default function LeadModal({
     <>
       {/* Lightweight overlay - allows background to be visible */}
       <div
-        className="fixed inset-0 z-40 bg-black/20 backdrop-blur-sm"
+        className="fixed inset-0 z-40 bg-black/60 backdrop-blur-md"
         onClick={onClose}
         aria-hidden="true"
       />
 
       {/* Modal - responsive positioning and sizing */}
       <div className="fixed inset-0 z-50 flex items-end justify-center sm:items-center p-4 sm:p-0">
-        <div className="w-full max-w-md rounded-t-lg sm:rounded-lg bg-white p-4 sm:p-6 shadow-lg max-h-[90vh] overflow-y-auto">
-          <h2 className="mb-4 text-lg sm:text-xl font-bold text-gray-900">
+        <div className="w-full max-w-md rounded-t-lg sm:rounded-lg bg-[#161616] p-4 sm:p-6 shadow-2xl border border-[#333333] max-h-[90vh] overflow-y-auto">
+          <h2 className="mb-4 text-lg sm:text-xl font-bold text-white">
             {title}
           </h2>
 
@@ -51,7 +51,7 @@ export default function LeadModal({
 
           <button
             onClick={onClose}
-            className="mt-4 w-full rounded bg-gray-300 px-4 py-2 text-sm sm:text-base text-gray-900 hover:bg-gray-400"
+            className="mt-4 w-full rounded bg-[#222222] px-4 py-2 text-sm sm:text-base text-white hover:bg-[#333333] border border-[#333333] transition-colors"
           >
             Cancel
           </button>

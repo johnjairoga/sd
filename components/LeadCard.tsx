@@ -10,11 +10,11 @@ interface LeadCardProps {
 }
 
 const SOURCE_COLORS: Record<string, string> = {
-  Website: 'bg-blue-100 text-blue-800',
-  Referral: 'bg-green-100 text-green-800',
-  LinkedIn: 'bg-blue-400 text-white',
-  'Cold Call': 'bg-orange-100 text-orange-800',
-  Other: 'bg-gray-100 text-gray-800',
+  Website: 'bg-blue-500/20 text-blue-300 border border-blue-500/30',
+  Referral: 'bg-green-500/20 text-green-300 border border-green-500/30',
+  LinkedIn: 'bg-blue-500/30 text-blue-200 border border-blue-500/50',
+  'Cold Call': 'bg-orange-500/20 text-orange-300 border border-orange-500/30',
+  Other: 'bg-gray-500/20 text-gray-300 border border-gray-500/30',
 };
 
 function getDaysAgo(dateString: string): string {
@@ -33,6 +33,14 @@ function getDaysAgo(dateString: string): string {
 export default function LeadCard({ lead, index, onEdit }: LeadCardProps) {
   const colorClass = SOURCE_COLORS[lead.source || 'Other'] || SOURCE_COLORS.Other;
 
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    e.currentTarget.style.setProperty('--spotlight-x', `${x}px`);
+    e.currentTarget.style.setProperty('--spotlight-y', `${y}px`);
+  };
+
   return (
     <Draggable draggableId={lead.id} index={index}>
       {(provided, snapshot) => (
@@ -41,12 +49,13 @@ export default function LeadCard({ lead, index, onEdit }: LeadCardProps) {
           {...provided.draggableProps}
           {...provided.dragHandleProps}
           onClick={() => onEdit(lead)}
-          className={`mb-3 cursor-pointer rounded-lg border border-gray-200 bg-white p-4 shadow-sm hover:shadow-md ${
-            snapshot.isDragging ? 'shadow-lg ring-2 ring-blue-500' : ''
-          }`}
+          onMouseMove={handleMouseMove}
+          className={`mb-3 cursor-pointer rounded-lg border bg-[#1c1c1c] p-4 shadow-sm hover:shadow-md hover:shadow-blue-500/20 transition-all ${
+            snapshot.isDragging ? 'shadow-lg ring-2 ring-blue-500' : 'border-[#333333]'
+          } spotlight`}
         >
-          <h3 className="font-semibold text-gray-900">{lead.name}</h3>
-          <p className="text-sm text-gray-600">{lead.company}</p>
+          <h3 className="font-semibold text-white">{lead.name}</h3>
+          <p className="text-sm text-gray-400">{lead.company}</p>
           <div className="mt-3 flex items-center justify-between">
             <span className={`rounded-full px-2 py-1 text-xs font-medium ${colorClass}`}>
               {lead.source || 'Other'}

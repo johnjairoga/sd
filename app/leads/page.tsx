@@ -76,63 +76,63 @@ export default function LeadsPage() {
   };
 
   if (isLoading) {
-    return <div className="p-8 text-center">Loading leads...</div>;
+    return <div className="min-h-screen bg-gradient-to-br from-[#161616] to-[#0a0a0a] p-8 text-center text-gray-400">Loading leads...</div>;
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 p-8">
+    <div className="min-h-screen bg-gradient-to-br from-[#161616] to-[#0a0a0a] p-8">
       <div className="mx-auto max-w-6xl">
         <div className="mb-6 flex items-center justify-between">
-          <h1 className="text-3xl font-bold text-gray-900">All Leads</h1>
+          <h1 className="text-3xl font-bold text-white">All Leads</h1>
           <button
             onClick={handleCreateNew}
-            className="rounded bg-blue-600 px-4 py-2 text-white hover:bg-blue-700"
+            className="rounded bg-blue-600 px-4 py-2 text-white hover:bg-blue-700 transition-colors shadow-lg hover:shadow-blue-500/50"
           >
             + New Lead
           </button>
         </div>
 
         {leads.length === 0 ? (
-          <div className="rounded-lg bg-white p-8 text-center text-gray-500">
+          <div className="rounded-lg glassmorphic border border-[#333333] p-8 text-center text-gray-400">
             No leads yet. Create one to get started.
           </div>
         ) : (
-          <div className="overflow-x-auto rounded-lg bg-white shadow">
+          <div className="overflow-x-auto rounded-lg glassmorphic border border-[#333333] shadow-xl">
             <table className="w-full">
-              <thead className="border-b bg-gray-100">
+              <thead className="border-b border-[#333333] bg-[#1c1c1c]">
                 <tr>
-                  <th className="px-6 py-3 text-left text-sm font-semibold text-gray-900">Name</th>
-                  <th className="px-6 py-3 text-left text-sm font-semibold text-gray-900">Company</th>
-                  <th className="px-6 py-3 text-left text-sm font-semibold text-gray-900">Email</th>
-                  <th className="px-6 py-3 text-left text-sm font-semibold text-gray-900">Phone</th>
-                  <th className="px-6 py-3 text-left text-sm font-semibold text-gray-900">Source</th>
-                  <th className="px-6 py-3 text-left text-sm font-semibold text-gray-900">Status</th>
-                  <th className="px-6 py-3 text-left text-sm font-semibold text-gray-900">Actions</th>
+                  <th className="px-6 py-3 text-left text-sm font-semibold text-white">Name</th>
+                  <th className="px-6 py-3 text-left text-sm font-semibold text-white">Company</th>
+                  <th className="px-6 py-3 text-left text-sm font-semibold text-white">Email</th>
+                  <th className="px-6 py-3 text-left text-sm font-semibold text-white">Phone</th>
+                  <th className="px-6 py-3 text-left text-sm font-semibold text-white">Source</th>
+                  <th className="px-6 py-3 text-left text-sm font-semibold text-white">Status</th>
+                  <th className="px-6 py-3 text-left text-sm font-semibold text-white">Actions</th>
                 </tr>
               </thead>
-              <tbody className="divide-y">
+              <tbody className="divide-y divide-[#333333]">
                 {leads.map(lead => (
-                  <tr key={lead.id} className="hover:bg-gray-50">
-                    <td className="px-6 py-4 text-sm font-medium text-gray-900">{lead.name}</td>
-                    <td className="px-6 py-4 text-sm text-gray-600">{lead.company}</td>
-                    <td className="px-6 py-4 text-sm text-gray-600">{lead.email}</td>
-                    <td className="px-6 py-4 text-sm text-gray-600">{lead.phone}</td>
-                    <td className="px-6 py-4 text-sm text-gray-600">{lead.source}</td>
+                  <tr key={lead.id} className="hover:bg-[#1c1c1c] transition-colors">
+                    <td className="px-6 py-4 text-sm font-medium text-white">{lead.name}</td>
+                    <td className="px-6 py-4 text-sm text-gray-400">{lead.company}</td>
+                    <td className="px-6 py-4 text-sm text-gray-400">{lead.email}</td>
+                    <td className="px-6 py-4 text-sm text-gray-400">{lead.phone}</td>
+                    <td className="px-6 py-4 text-sm text-gray-400">{lead.source}</td>
                     <td className="px-6 py-4 text-sm">
-                      <span className="rounded-full bg-blue-100 px-3 py-1 text-xs font-semibold text-blue-800">
+                      <span className="rounded-full bg-blue-500/20 px-3 py-1 text-xs font-semibold text-blue-300 border border-blue-500/30">
                         {lead.status.replace(/_/g, ' ')}
                       </span>
                     </td>
-                    <td className="px-6 py-4 text-sm">
+                    <td className="px-6 py-4 text-sm space-x-3">
                       <button
                         onClick={() => handleEdit(lead)}
-                        className="mr-3 text-blue-600 hover:text-blue-800"
+                        className="text-blue-400 hover:text-blue-300 transition-colors"
                       >
                         Edit
                       </button>
                       <button
                         onClick={() => handleDelete(lead.id)}
-                        className="text-red-600 hover:text-red-800"
+                        className="text-red-400 hover:text-red-300 transition-colors"
                       >
                         Delete
                       </button>

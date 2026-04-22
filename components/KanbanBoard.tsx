@@ -106,8 +106,8 @@ export default function KanbanBoard() {
 
   if (isLoading) {
     return (
-      <div className="flex min-h-screen items-center justify-center">
-        <div className="text-xl text-gray-600">Loading board...</div>
+      <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-[#161616] to-[#0a0a0a]">
+        <div className="text-xl text-gray-400">Loading board...</div>
       </div>
     );
   }
@@ -119,23 +119,23 @@ export default function KanbanBoard() {
 
   return (
     <DragDropContext onDragEnd={handleDragEnd}>
-      <div className="min-h-screen bg-gray-100 p-4 sm:p-6 lg:p-8">
+      <div className="min-h-screen bg-gradient-to-br from-[#161616] to-[#0a0a0a] p-4 sm:p-6 lg:p-8">
         <div className="mx-auto max-w-7xl">
           {/* Header - responsive layout */}
           <div className="mb-6 sm:mb-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900">
+            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white">
               SouthDesk CRM
             </h1>
             <div className="flex gap-2 sm:gap-4 w-full sm:w-auto">
               <button
                 onClick={handleCreateNew}
-                className="flex-1 sm:flex-none rounded bg-blue-600 px-4 sm:px-6 py-2 text-sm sm:text-base text-white hover:bg-blue-700 transition-colors"
+                className="flex-1 sm:flex-none rounded bg-blue-600 px-4 sm:px-6 py-2 text-sm sm:text-base text-white hover:bg-blue-700 transition-colors shadow-lg hover:shadow-blue-500/50"
               >
                 + New Lead
               </button>
               <a
                 href="/leads"
-                className="flex-1 sm:flex-none rounded bg-gray-600 px-4 sm:px-6 py-2 text-sm sm:text-base text-white hover:bg-gray-700 text-center transition-colors"
+                className="flex-1 sm:flex-none rounded bg-[#222222] px-4 sm:px-6 py-2 text-sm sm:text-base text-white hover:bg-[#333333] text-center transition-colors border border-[#333333]"
               >
                 View All
               </a>
@@ -146,7 +146,7 @@ export default function KanbanBoard() {
           <MetricsStrip leads={leads} />
 
           {/* Kanban board - horizontal scroll on mobile */}
-          <div className="overflow-x-auto rounded-lg bg-white shadow-sm -mx-4 sm:mx-0 px-4 sm:px-0">
+          <div className="overflow-x-auto rounded-lg glassmorphic -mx-4 sm:mx-0 px-4 sm:px-0">
             <div className="flex gap-4 pb-4 min-w-min sm:min-w-0">
               {STATUSES.map(status => (
                 <KanbanColumn

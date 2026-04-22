@@ -38,41 +38,41 @@ export default function MetricsStrip({ leads }: MetricsStripProps) {
   })();
 
   return (
-    <div className="mb-8 grid grid-cols-4 gap-4">
-      <div className="rounded-lg bg-white p-6 shadow">
-        <p className="text-sm font-medium text-gray-600">Total Leads</p>
-        <p className="mt-2 text-3xl font-bold text-gray-900">{totalLeads}</p>
+    <div className="mb-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="rounded-lg glassmorphic p-6 border border-[#333333]">
+        <p className="text-sm font-medium text-gray-400">Total Leads</p>
+        <p className="mt-2 text-3xl font-bold text-white numeric">{totalLeads}</p>
       </div>
 
-      <div className="rounded-lg bg-white p-6 shadow">
-        <p className="text-sm font-medium text-gray-600">Conversion Rate</p>
-        <p className="mt-2 text-3xl font-bold text-gray-900">{conversionRate}</p>
+      <div className="rounded-lg glassmorphic p-6 border border-[#333333]">
+        <p className="text-sm font-medium text-gray-400">Conversion Rate</p>
+        <p className="mt-2 text-3xl font-bold text-white numeric">{conversionRate}</p>
       </div>
 
-      <div className="rounded-lg bg-white p-6 shadow">
-        <p className="text-sm font-medium text-gray-600">By Status</p>
+      <div className="rounded-lg glassmorphic p-6 border border-[#333333]">
+        <p className="text-sm font-medium text-gray-400">By Status</p>
         <div className="mt-2 flex flex-wrap gap-2">
-          <span className="rounded bg-gray-100 px-2 py-1 text-xs font-semibold text-gray-800">
+          <span className="rounded bg-gray-500/20 px-2 py-1 text-xs font-semibold text-gray-300 border border-gray-500/30">
             New: {leadsByStatus.new}
           </span>
-          <span className="rounded bg-blue-100 px-2 py-1 text-xs font-semibold text-blue-800">
+          <span className="rounded bg-blue-500/20 px-2 py-1 text-xs font-semibold text-blue-300 border border-blue-500/30">
             Contacted: {leadsByStatus.contacted}
           </span>
-          <span className="rounded bg-purple-100 px-2 py-1 text-xs font-semibold text-purple-800">
+          <span className="rounded bg-purple-500/20 px-2 py-1 text-xs font-semibold text-purple-300 border border-purple-500/30">
             Proposal: {leadsByStatus.proposal_sent}
           </span>
-          <span className="rounded bg-green-100 px-2 py-1 text-xs font-semibold text-green-800">
+          <span className="rounded bg-green-500/20 px-2 py-1 text-xs font-semibold text-green-300 border border-green-500/30">
             Won: {leadsByStatus.closed_won}
           </span>
-          <span className="rounded bg-red-100 px-2 py-1 text-xs font-semibold text-red-800">
+          <span className="rounded bg-red-500/20 px-2 py-1 text-xs font-semibold text-red-300 border border-red-500/30">
             Lost: {leadsByStatus.lost}
           </span>
         </div>
       </div>
 
-      <div className="rounded-lg bg-white p-6 shadow">
-        <p className="text-sm font-medium text-gray-600">Inactive Leads</p>
-        <p className="mt-2 text-3xl font-bold text-gray-900">{inactiveLeads}</p>
+      <div className="rounded-lg glassmorphic p-6 border border-[#333333]">
+        <p className="text-sm font-medium text-gray-400">Inactive Leads</p>
+        <p className="mt-2 text-3xl font-bold text-white numeric">{inactiveLeads}</p>
         <p className="mt-1 text-xs text-gray-500">No activity in 7 days</p>
       </div>
     </div>

@@ -35,79 +35,79 @@ export default function LeadForm({ initialData, onSubmit, isLoading }: LeadFormP
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       <div>
-        <label className="block text-sm font-medium text-gray-700">Name *</label>
+        <label className="block text-sm font-medium text-gray-300">Name *</label>
         <input
           type="text"
           name="name"
           value={formData.name}
           onChange={handleChange}
           required
-          className="mt-1 w-full rounded border border-gray-300 px-3 py-2 text-gray-900"
+          className="mt-1 w-full rounded border border-[#333333] bg-[#1c1c1c] px-3 py-2 text-white placeholder-gray-500 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
           placeholder="Lead name"
         />
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-gray-700">Company</label>
+        <label className="block text-sm font-medium text-gray-300">Company</label>
         <input
           type="text"
           name="company"
           value={formData.company}
           onChange={handleChange}
-          className="mt-1 w-full rounded border border-gray-300 px-3 py-2 text-gray-900"
+          className="mt-1 w-full rounded border border-[#333333] bg-[#1c1c1c] px-3 py-2 text-white placeholder-gray-500 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
           placeholder="Company name"
         />
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-gray-700">Email</label>
+        <label className="block text-sm font-medium text-gray-300">Email</label>
         <input
           type="email"
           name="email"
           value={formData.email}
           onChange={handleChange}
-          className="mt-1 w-full rounded border border-gray-300 px-3 py-2 text-gray-900"
+          className="mt-1 w-full rounded border border-[#333333] bg-[#1c1c1c] px-3 py-2 text-white placeholder-gray-500 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
           placeholder="Email address"
         />
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-gray-700">Phone</label>
+        <label className="block text-sm font-medium text-gray-300">Phone</label>
         <input
           type="tel"
           name="phone"
           value={formData.phone}
           onChange={handleChange}
-          className="mt-1 w-full rounded border border-gray-300 px-3 py-2 text-gray-900"
+          className="mt-1 w-full rounded border border-[#333333] bg-[#1c1c1c] px-3 py-2 text-white placeholder-gray-500 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
           placeholder="Phone number"
         />
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-gray-700">Source</label>
+        <label className="block text-sm font-medium text-gray-300">Source</label>
         <select
           name="source"
           value={formData.source}
           onChange={handleChange}
-          className="mt-1 w-full rounded border border-gray-300 px-3 py-2 text-gray-900"
+          className="mt-1 w-full rounded border border-[#333333] bg-[#1c1c1c] px-3 py-2 text-white focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
         >
-          <option value="">Select source</option>
+          <option value="" className="bg-[#1c1c1c] text-white">Select source</option>
           {SOURCE_OPTIONS.map(src => (
-            <option key={src} value={src}>{src}</option>
+            <option key={src} value={src} className="bg-[#1c1c1c] text-white">{src}</option>
           ))}
         </select>
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-gray-700">Status</label>
+        <label className="block text-sm font-medium text-gray-300">Status</label>
         <select
           name="status"
           value={formData.status}
           onChange={handleChange}
-          className="mt-1 w-full rounded border border-gray-300 px-3 py-2 text-gray-900"
+          className="mt-1 w-full rounded border border-[#333333] bg-[#1c1c1c] px-3 py-2 text-white focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
         >
           {STATUS_OPTIONS.map(status => (
-            <option key={status} value={status}>
+            <option key={status} value={status} className="bg-[#1c1c1c] text-white">
               {status.replace(/_/g, ' ').charAt(0).toUpperCase() + status.replace(/_/g, ' ').slice(1)}
             </option>
           ))}
@@ -117,7 +117,7 @@ export default function LeadForm({ initialData, onSubmit, isLoading }: LeadFormP
       <button
         type="submit"
         disabled={isLoading}
-        className="w-full rounded bg-blue-600 px-4 py-2 text-white hover:bg-blue-700 disabled:bg-gray-400"
+        className="w-full rounded bg-blue-600 px-4 py-2 text-white hover:bg-blue-700 disabled:bg-gray-600 transition-colors shadow-lg hover:shadow-blue-500/50"
       >
         {isLoading ? 'Saving...' : 'Save Lead'}
       </button>
