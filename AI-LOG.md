@@ -33,3 +33,22 @@
 This is a common gotcha in Next.js 16 migrations — the framework moved to Promise-based params for better performance.
 
 ---
+
+## [Commit 0012b97] — Improve responsive design and modal UX
+
+**Prompt:** Refactor the LeadModal to be mobile-friendly. The modal should not fully block the Kanban board, should use a lighter overlay, and behave as a bottom sheet on mobile while centered on desktop. Also improve the overall app responsiveness for all screen sizes.
+
+**Result:** Initial implementation had a heavy dark overlay (bg-black/50) that completely blocked the background, and fixed modal positioning without responsive breakpoints. This created a poor mobile UX where users couldn't see the context of the Kanban board.
+
+**Adjustment:** 
+- Changed overlay from `bg-black/50` to `bg-black/20` with `backdrop-blur-sm` for a modern, lightweight feel
+- Added responsive positioning: `items-end sm:items-center` (bottom sheet on mobile, centered on desktop)
+- Updated modal styling: `rounded-t-lg sm:rounded-lg` and `p-4 sm:p-6` for responsive padding
+- Made buttons stack vertically on mobile with `flex-col sm:flex-row` 
+- Added horizontal scroll to Kanban columns for small screens: `overflow-x-auto` + `min-w-min`
+- Applied responsive text sizing throughout: `text-2xl sm:text-3xl lg:text-4xl`
+- Enabled background visibility with lighter overlay and added `max-h-[90vh] overflow-y-auto` for modal overflow handling
+
+This significantly improves UX on all devices while keeping the Kanban context visible.
+
+---
