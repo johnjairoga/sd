@@ -1,6 +1,6 @@
 'use client';
 
-import { Lead } from '@/types/lead';
+import { Lead, Seller } from '@/types/lead';
 import { useState } from 'react';
 import KanbanBoard from './KanbanBoard';
 import TableView from './TableView';
@@ -8,9 +8,11 @@ import LeadModal from './LeadModal';
 import { useLeadsData } from '@/hooks/useLeadsData';
 
 type ViewType = 'kanban' | 'table';
+const SELLERS: Seller[] = ['Seller_1', 'Seller_2', 'Seller_3'];
 
 export default function CRMViewSwitcher() {
   const [currentView, setCurrentView] = useState<ViewType>('kanban');
+  const [selectedSeller, setSelectedSeller] = useState<Seller | null>(null);
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedLead, setSelectedLead] = useState<Lead | undefined>();
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -51,6 +53,10 @@ export default function CRMViewSwitcher() {
     if (!window.confirm('Are you sure you want to delete this lead?')) return;
     await deleteLead(leadId);
   };
+
+  const filteredLeads = selectedSeller
+    ? leads.filter(lead => lead.seller === selectedSeller)
+    : leads;
 
   return (
     <>
@@ -104,10 +110,37 @@ export default function CRMViewSwitcher() {
             </div>
           </div>
 
+          {/* Seller filter buttons */}
+          <div className="mb-6 flex flex-wrap gap-2">
+            <button
+              onClick={() => setSelectedSeller(null)}
+              className={`px-4 py-2 rounded text-sm font-medium transition-colors ${
+                selectedSeller === null
+                  ? 'bg-green-600 text-white'
+                  : 'bg-[#1c1c1c] text-gray-400 border border-[#333333] hover:text-white'
+              }`}
+            >
+              All Sellers
+            </button>
+            {SELLERS.map(seller => (
+              <button
+                key={seller}
+                onClick={() => setSelectedSeller(seller)}
+                className={`px-4 py-2 rounded text-sm font-medium transition-colors ${
+                  selectedSeller === seller
+                    ? 'bg-blue-600 text-white'
+                    : 'bg-[#1c1c1c] text-gray-400 border border-[#333333] hover:text-white'
+                }`}
+              >
+                {seller}
+              </button>
+            ))}
+          </div>
+
           {/* View content */}
           {currentView === 'kanban' ? (
             <KanbanBoard
-              leads={leads}
+              leads={filteredLeads}
               isLoading={isLoading}
               onLeadsChange={fetchLeads}
             />
@@ -118,7 +151,7 @@ export default function CRMViewSwitcher() {
                 <h2 className="text-xl font-semibold text-gray-300 mb-4">Leads List</h2>
               </div>
               <TableView
-                leads={leads}
+                leads={filteredLeads}
                 isLoading={isLoading}
                 onEditLead={handleEditLead}
                 onDeleteLead={handleDeleteLead}
