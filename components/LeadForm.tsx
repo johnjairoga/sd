@@ -42,9 +42,14 @@ export default function LeadForm({ initialData, onSubmit, isLoading }: LeadFormP
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     await onSubmit({
-      ...formData,
-      seller: formData.seller || null,
-    });
+      name: formData.name,
+      company: formData.company,
+      phone: formData.phone,
+      email: formData.email,
+      source: formData.source,
+      status: formData.status,
+      seller: (formData.seller as Seller) || null,
+    } as Partial<Lead>);
   };
 
   return (
