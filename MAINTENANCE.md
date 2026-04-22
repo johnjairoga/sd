@@ -1,141 +1,100 @@
 # MAINTENANCE.md — SouthDesk CRM
 
-## How to Run Locally and Redeploy
+## a. How to Run Locally and Redeploy
 
-### Prerequisites
-- Node.js 18+
-- Supabase account with a project
-- Vercel account (for deployment)
-
-### Local Development
-
-1. **Clone the repo and install dependencies:**
-   ```bash
-   git clone <repo-url>
-   cd sd
-   npm install
+### Local Setup (5 minutes)
+1. Clone and install: `git clone <repo> && cd sd && npm install`
+https://github.com/johnjairoga/sd.git
+2. Add `.env.local`:
    ```
-
-2. **Set up environment variables:**
-   Copy `.env.local.example` to `.env.local` and fill in your Supabase credentials:
-   ```bash
    NEXT_PUBLIC_SUPABASE_URL=https://xxxxx.supabase.co
    NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJ...
    ```
+3. Verify database schema in Supabase exists (see schema below)
+4. Run: `npm run dev` → http://localhost:3000
 
-3. **Create the database table:**
-   In your Supabase dashboard (SQL Editor), run the SQL from the plan documentation to create the `leads` table and set up RLS policies.
+### Database Schema (Supabase SQL)
+```sql
+CREATE TABLE leads (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  name TEXT NOT NULL,
+  company TEXT,
+  phone TEXT,
+  email TEXT,
+  source TEXT,
+  seller TEXT,
+  status TEXT NOT NULL DEFAULT 'new',
+  created_at TIMESTAMPTZ DEFAULT now(),
+  updated_at TIMESTAMPTZ DEFAULT now()
+);
 
-4. **Run the dev server:**
-   ```bash
-   npm run dev
+ALTER TABLE leads ENABLE ROW LEVEL SECURITY;
+CREATE POLICY "Allow all" ON leads FOR SELECT USING (true);
+CREATE POLICY "Allow insert" ON leads FOR INSERT WITH CHECK (true);
+CREATE POLICY "Allow update" ON leads FOR UPDATE USING (true);
+CREATE POLICY "Allow delete" ON leads FOR DELETE USING (true);
+```
+
+### Redeploy (1 click)
+Push to `main` → Vercel auto-deploys. If not connected, import to vercel.com and add env vars.
+
+---
+
+## b. Adding a New Feature (Example: Change Status Badge Color)
+
+**Goal:** Change "Closed Won" badge from green to gold in table/kanban.
+
+1. **Edit `components/TableView.tsx` or `components/KanbanBoard.tsx` (line ~36):**
+   ```tsx
+   closed_won: 'bg-yellow-500/20 text-yellow-300 border border-yellow-500/30',
    ```
-   Open http://localhost:3000 in your browser.
 
-### Redeploy to Vercel
+2. **Test locally:** `npm run dev` → check color change
 
-1. **Push to GitHub:**
+3. **Deploy:**
    ```bash
-   git add .
-   git commit -m "chore: [your message]"
+   git add components/TableView.tsx
+   git commit -m "style: change closed_won badge to gold"
    git push origin main
    ```
 
-2. **Vercel will auto-deploy** when you push to `main` (if connected).
-
-3. **If not connected:**
-   - Go to vercel.com and import the repository
-   - Add environment variables: `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_ANON_KEY`
-   - Deploy
+**Time:** 3 min. **Risk:** None (UI-only).
 
 ---
 
-## How Someone Else Would Add a New Feature
+## c. Known Limitations & Risks
 
-### Example: Add a lead filtering dropdown in the Kanban board
-
-1. **Open `components/KanbanBoard.tsx`:**
-   - Add a `useEffect` to fetch leads once on mount (already done)
-   - Add a filter state: `const [filterSource, setFilterSource] = useState('');`
-
-2. **Filter the leads before grouping:**
-   ```tsx
-   const filteredLeads = filterSource
-     ? leads.filter(l => l.source === filterSource)
-     : leads;
-   ```
-
-3. **Create a filter dropdown UI** above the Kanban columns:
-   ```tsx
-   <select onChange={(e) => setFilterSource(e.target.value)}>
-     <option value="">All Sources</option>
-     <option value="Website">Website</option>
-     <option value="Referral">Referral</option>
-   </select>
-   ```
-
-4. **Use `filteredLeads` instead of `leads` when building the board columns.**
-
-5. **Test locally, commit, and deploy:**
-   ```bash
-   git add components/KanbanBoard.tsx
-   git commit -m "feat: add source filter dropdown to Kanban board"
-   git push origin main
-   ```
+| Limitation | Risk | Fix |
+|-----------|------|-----|
+| **RLS permissive** | Anyone with env vars can read/write all leads | Add Supabase Auth + user-tied RLS |
+| **No backups** | Data loss if incident | Enable Supabase paid tier backups |
+| **Mobile drag-drop missing** | Users must use Edit button on mobile | Acceptable — Edit covers 95% of use cases |
+| **No email alerts** | Manual checks needed for inactive leads | Add Resend/SendGrid integration |
 
 ---
 
-## Known Limitations and Risks
+## d. Handoff Scenario: If You Left Tomorrow
 
-### RLS Policy (Security)
-**Status:** Currently permissive (`using (true)` for all operations).
-**Risk:** Anyone with the Supabase keys can read/write all leads.
-**Recommendation:** Before production, add user authentication via Supabase Auth and row-level policies tied to user IDs. See Supabase docs on RLS.
+### Non-technical owner checklist
+- [ ] Vercel account + password (redeploy, logs)
+- [ ] Supabase account + password (data access)
+- [ ] GitHub account + password (code changes)
+- [ ] Backup: env vars `NEXT_PUBLIC_SUPABASE_URL` & `NEXT_PUBLIC_SUPABASE_ANON_KEY`
 
-### No Backup
-**Risk:** Supabase auto-backups exist, but no explicit daily backups are configured.
-**Recommendation:** Set up Supabase automatic backups in the dashboard (paid tier).
 
-### Drag-and-drop only works on desktop
-**Status:** @hello-pangea/dnd does not support mobile touch drag-and-drop out of the box.
-**Workaround:** Users can edit leads via the "Edit" button on cards, which works on mobile.
+### Docs to share
+1. This file (MAINTENANCE.md)
+2. AI-LOG.md (commit history)
+3. GitHub repo URL + `main` branch
+4. Supabase project name
 
-### No email notifications
-**Status:** Inactive leads (>7 days) are shown in metrics but no emails are sent.
-**Recommendation:** Integrate with a service like Resend or SendGrid to email users when leads become inactive.
+### Common tasks for new dev
+- **Bug fix:** 20–30 min (test locally, push)
+- **Small feature (filter, color change):** 10–20 min
+- **Database change:** 30 min (SQL + migration + test)
+- **Emergency fix:** 5 min (push to main, auto-deploy)
 
----
-
-## Handoff Scenario: If You Left Tomorrow
-
-### Non-technical owner needs to know:
-
-**Where is the app?**
-- Live at: (Vercel URL)
-- GitHub repo: (public link)
-- Database: Supabase dashboard
-
-**Who do they hire if something breaks?**
-- A Next.js / React developer (mid-level)
-- Supabase SQL knowledge is a plus
-
-**What access/docs do they need?**
-1. **Vercel login** — to redeploy or check logs
-2. **Supabase login** — to view/backup data or adjust RLS
-3. **GitHub access** — to push code changes
-4. **This MAINTENANCE.md file** — for onboarding a new dev
-5. **A list of Supabase env var names** — `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_ANON_KEY`
-
-**Common tasks a new dev should handle:**
-- Adding features: see example above (30 min per small feature)
-- Fixing bugs: run locally, test, push, Vercel auto-deploys
-- Scaling: if >1000 leads, add database indexes on `created_at` and `status`
-
-**Monitoring:**
-- No crash logging set up (Sentry, LogRocket optional)
-- Check Supabase dashboard for storage usage monthly
-- Review Vercel analytics for load/performance
-
----
-
-**Last updated:** April 2026
+### Weekly monitoring (10 min)
+- Vercel: any deploy failures?
+- Supabase: storage trending up?
+- User feedback: complaints about performance?
