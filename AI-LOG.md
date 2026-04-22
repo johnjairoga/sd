@@ -19,3 +19,17 @@
 **Adjustment:** No adjustment needed. Supabase client is properly exported for use in API routes and components. Modified `.gitignore` to allow `.env.local.example` to be committed while keeping `.env.local` private.
 
 ---
+
+## [Commit 279e7f9] — Fix API routes for Next.js 16 async params
+
+**Prompt:** Create PATCH and DELETE API routes for individual leads with proper type safety.
+
+**Result:** Initial implementation used `{ params: { id: string } }` which worked in earlier Next.js versions.
+
+**Adjustment:** Next.js 16 changed route segment config to use `params: Promise<{ id: string }>`. Fixed by:
+- Awaiting `params` before accessing `id`
+- Updated both PATCH and DELETE handlers to use async params
+- Build now passes without TypeScript errors
+This is a common gotcha in Next.js 16 migrations — the framework moved to Promise-based params for better performance.
+
+---
