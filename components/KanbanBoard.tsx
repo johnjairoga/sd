@@ -119,37 +119,44 @@ export default function KanbanBoard() {
 
   return (
     <DragDropContext onDragEnd={handleDragEnd}>
-      <div className="min-h-screen bg-gray-100 p-8">
+      <div className="min-h-screen bg-gray-100 p-4 sm:p-6 lg:p-8">
         <div className="mx-auto max-w-7xl">
-          <div className="mb-8 flex items-center justify-between">
-            <h1 className="text-4xl font-bold text-gray-900">SouthDesk CRM</h1>
-            <div className="flex gap-4">
+          {/* Header - responsive layout */}
+          <div className="mb-6 sm:mb-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900">
+              SouthDesk CRM
+            </h1>
+            <div className="flex gap-2 sm:gap-4 w-full sm:w-auto">
               <button
                 onClick={handleCreateNew}
-                className="rounded bg-blue-600 px-6 py-2 text-white hover:bg-blue-700"
+                className="flex-1 sm:flex-none rounded bg-blue-600 px-4 sm:px-6 py-2 text-sm sm:text-base text-white hover:bg-blue-700 transition-colors"
               >
                 + New Lead
               </button>
               <a
                 href="/leads"
-                className="rounded bg-gray-600 px-6 py-2 text-white hover:bg-gray-700"
+                className="flex-1 sm:flex-none rounded bg-gray-600 px-4 sm:px-6 py-2 text-sm sm:text-base text-white hover:bg-gray-700 text-center transition-colors"
               >
                 View All
               </a>
             </div>
           </div>
 
+          {/* Metrics strip */}
           <MetricsStrip leads={leads} />
 
-          <div className="flex gap-4 overflow-x-auto pb-4">
-            {STATUSES.map(status => (
-              <KanbanColumn
-                key={status}
-                status={status}
-                leads={leadsByStatus[status]}
-                onEditLead={handleEditLead}
-              />
-            ))}
+          {/* Kanban board - horizontal scroll on mobile */}
+          <div className="overflow-x-auto rounded-lg bg-white shadow-sm -mx-4 sm:mx-0 px-4 sm:px-0">
+            <div className="flex gap-4 pb-4 min-w-min sm:min-w-0">
+              {STATUSES.map(status => (
+                <KanbanColumn
+                  key={status}
+                  status={status}
+                  leads={leadsByStatus[status]}
+                  onEditLead={handleEditLead}
+                />
+              ))}
+            </div>
           </div>
         </div>
       </div>

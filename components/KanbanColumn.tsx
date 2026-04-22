@@ -28,7 +28,7 @@ const STATUS_COLORS: Record<LeadStatus, string> = {
 
 export default function KanbanColumn({ status, leads, onEditLead }: KanbanColumnProps) {
   return (
-    <div className={`flex w-80 flex-shrink-0 flex-col rounded-lg border-2 ${STATUS_COLORS[status]} p-4`}>
+    <div className={`flex w-80 flex-shrink-0 flex-col rounded-lg border-2 ${STATUS_COLORS[status]} p-3 sm:p-4`}>
       <div className="mb-4 flex items-center justify-between">
         <h2 className="font-bold text-gray-900">{STATUS_LABELS[status]}</h2>
         <span className="rounded-full bg-gray-300 px-3 py-1 text-sm font-semibold text-gray-700">
