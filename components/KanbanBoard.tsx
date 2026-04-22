@@ -143,12 +143,8 @@ export default function KanbanBoard({ leads: propsLeads, isLoading: propsIsLoadi
     <DragDropContext onDragEnd={handleDragEnd}>
       <div className="min-h-screen bg-gradient-to-br from-[#161616] to-[#0a0a0a] p-4 sm:p-6 lg:p-8">
         <div className="mx-auto max-w-7xl">
-          {/* Header - responsive layout */}
-          <div className="mb-6 sm:mb-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white">
-              SouthDesk CRM
-            </h1>
-            <div className="flex gap-2 sm:gap-4 w-full sm:w-auto">
+          {/* Header - action buttons */}
+          <div className="mb-6 sm:mb-8 flex gap-2 sm:gap-4 w-full sm:w-auto">
               <button
                 onClick={handleCreateNew}
                 className="flex-1 sm:flex-none rounded bg-blue-600 px-4 sm:px-6 py-2 text-sm sm:text-base text-white hover:bg-blue-700 transition-colors shadow-lg hover:shadow-blue-500/50"
@@ -161,7 +157,6 @@ export default function KanbanBoard({ leads: propsLeads, isLoading: propsIsLoadi
               >
                 View All
               </a>
-            </div>
           </div>
 
           {/* Metrics strip */}
