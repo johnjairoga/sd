@@ -1,5 +1,23 @@
 # AI-LOG — Development Iteration Log
 
+## [Commit 7a29c23] — Add seller filter buttons to both Kanban and Table views
+
+**Prompt:** Add seller filter buttons to enable filtering leads by vendor across both Kanban and Table views. Show 4 buttons: "All Sellers", "Seller_1", "Seller_2", "Seller_3". Filter state should persist when switching between views.
+
+**Result:**
+- Centralized seller filter state in CRMViewSwitcher (`selectedSeller`)
+- Added 4 filter buttons in header (All Sellers highlighted in green, individual sellers in blue when active)
+- Filter applies to both KanbanBoard and TableView simultaneously
+- Filter persists across view switches — select Seller_1 in Kanban, switch to Table, still shows only Seller_1
+- `filteredLeads` computed from leads based on selectedSeller
+- Both views receive filtered data directly
+
+Architecture leverages existing shared state pattern — no new data fetching, pure client-side filtering. Change is safe and follows established patterns in CRMViewSwitcher.
+
+**Adjustment:** No adjustment needed. Both views tested, filter buttons styled consistently, filter logic verified.
+
+---
+
 ## [Commit d3f629f] — Add seller column to table view
 
 **Prompt:** Add a seller column to TableView component to display assigned seller for each lead.
