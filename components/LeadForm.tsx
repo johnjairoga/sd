@@ -13,8 +13,18 @@ const STATUS_OPTIONS: LeadStatus[] = ['new', 'contacted', 'proposal_sent', 'clos
 const SOURCE_OPTIONS = ['Website', 'Referral', 'LinkedIn', 'Cold Call', 'Other'];
 const SELLER_OPTIONS: Seller[] = ['Seller_1', 'Seller_2', 'Seller_3'];
 
+interface FormData {
+  name: string;
+  company: string;
+  phone: string;
+  email: string;
+  source: string;
+  status: LeadStatus;
+  seller: Seller | '';
+}
+
 export default function LeadForm({ initialData, onSubmit, isLoading }: LeadFormProps) {
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<FormData>({
     name: initialData?.name || '',
     company: initialData?.company || '',
     phone: initialData?.phone || '',
@@ -31,7 +41,10 @@ export default function LeadForm({ initialData, onSubmit, isLoading }: LeadFormP
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    await onSubmit(formData);
+    await onSubmit({
+      ...formData,
+      seller: formData.seller || null,
+    });
   };
 
   return (
