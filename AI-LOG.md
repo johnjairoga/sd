@@ -1,6 +1,6 @@
 # AI-LOG — Development Iteration Log
 
-## [Commit TBD] — Add seller assignment field to leads
+## [Commit 5403845] — Add seller assignment field to leads
 
 **Prompt:** Implement seller assignment functionality by adding a `seller` field to leads table. Add dropdown in LeadForm to select between Seller_1, Seller_2, Seller_3. Update database schema, API routes, types, and table view to display seller information.
 
