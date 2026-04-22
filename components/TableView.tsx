@@ -70,6 +70,7 @@ export default function TableView({
             <th className="px-6 py-3 text-left text-sm font-semibold text-white">Email</th>
             <th className="px-6 py-3 text-left text-sm font-semibold text-white">Phone</th>
             <th className="px-6 py-3 text-left text-sm font-semibold text-white">Source</th>
+            <th className="px-6 py-3 text-left text-sm font-semibold text-white">Seller</th>
             <th className="px-6 py-3 text-left text-sm font-semibold text-white">Status</th>
             <th className="px-6 py-3 text-left text-sm font-semibold text-white">Added</th>
             <th className="px-6 py-3 text-left text-sm font-semibold text-white">Actions</th>
@@ -86,6 +87,7 @@ export default function TableView({
               <td className="px-6 py-4 text-sm text-gray-400">{lead.email || '—'}</td>
               <td className="px-6 py-4 text-sm text-gray-400">{lead.phone || '—'}</td>
               <td className="px-6 py-4 text-sm text-gray-400">{lead.source || '—'}</td>
+              <td className="px-6 py-4 text-sm text-gray-400">{lead.seller || '—'}</td>
               <td className="px-6 py-4 text-sm">
                 <span className={`rounded-full px-3 py-1 text-xs font-semibold ${STATUS_BADGE_COLORS[lead.status] || STATUS_BADGE_COLORS.new}`}>
                   {STATUS_LABELS[lead.status]}
