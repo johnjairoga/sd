@@ -1,5 +1,5 @@
-import KanbanBoard from '@/components/KanbanBoard';
+import CRMViewSwitcher from '@/components/CRMViewSwitcher';
 
 export default function Home() {
-  return <KanbanBoard />;
+  return <CRMViewSwitcher />;
 }

@@ -9,23 +9,41 @@ import MetricsStrip from './MetricsStrip';
 
 const STATUSES: LeadStatus[] = ['new', 'contacted', 'proposal_sent', 'closed_won', 'lost'];
 
-export default function KanbanBoard() {
-  const [leads, setLeads] = useState<Lead[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
+interface KanbanBoardProps {
+  leads?: Lead[];
+  isLoading?: boolean;
+  onLeadsChange?: (leads: Lead[]) => void;
+}
+
+export default function KanbanBoard({ leads: propsLeads, isLoading: propsIsLoading, onLeadsChange }: KanbanBoardProps = {}) {
+  const [leads, setLeads] = useState<Lead[]>(propsLeads ?? []);
+  const [isLoading, setIsLoading] = useState(propsIsLoading ?? true);
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedLead, setSelectedLead] = useState<Lead | undefined>();
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
-    fetchLeads();
-  }, []);
+    if (propsLeads !== undefined) {
+      setLeads(propsLeads);
+    } else {
+      fetchLeads();
+    }
+  }, [propsLeads]);
+
+  useEffect(() => {
+    if (propsIsLoading !== undefined) {
+      setIsLoading(propsIsLoading);
+    }
+  }, [propsIsLoading]);
 
   const fetchLeads = async () => {
     try {
       setIsLoading(true);
       const response = await fetch('/api/leads');
       const data = await response.json();
-      setLeads(Array.isArray(data) ? data : []);
+      const newLeads = Array.isArray(data) ? data : [];
+      setLeads(newLeads);
+      onLeadsChange?.(newLeads);
     } catch (error) {
       console.error('Failed to fetch leads:', error);
     } finally {
@@ -47,11 +65,11 @@ export default function KanbanBoard() {
     if (!lead) return;
 
     // Optimistic update
-    setLeads(prev =>
-      prev.map(l =>
-        l.id === draggableId ? { ...l, status: newStatus } : l
-      )
+    const updatedLeads = leads.map(l =>
+      l.id === draggableId ? { ...l, status: newStatus } : l
     );
+    setLeads(updatedLeads);
+    onLeadsChange?.(updatedLeads);
 
     // Sync with Supabase
     try {
@@ -94,7 +112,11 @@ export default function KanbanBoard() {
       });
 
       if (response.ok) {
-        await fetchLeads();
+        if (onLeadsChange) {
+          await fetchLeads();
+        } else {
+          await fetchLeads();
+        }
         setModalOpen(false);
       }
     } catch (error) {
