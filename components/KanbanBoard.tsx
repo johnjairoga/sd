@@ -5,6 +5,7 @@ import { DragDropContext, DropResult } from '@hello-pangea/dnd';
 import { useEffect, useState } from 'react';
 import LeadModal from './LeadModal';
 import KanbanColumn from './KanbanColumn';
+import MetricsStrip from './MetricsStrip';
 
 const STATUSES: LeadStatus[] = ['new', 'contacted', 'proposal_sent', 'closed_won', 'lost'];
 
@@ -137,6 +138,8 @@ export default function KanbanBoard() {
               </a>
             </div>
           </div>
+
+          <MetricsStrip leads={leads} />
 
           <div className="flex gap-4 overflow-x-auto pb-4">
             {STATUSES.map(status => (
