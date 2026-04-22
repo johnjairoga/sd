@@ -1,5 +1,15 @@
 # AI-LOG — Development Iteration Log
 
+## [Commit 9f6b1a1] — Remove duplicate 'SouthDesk CRM' title from kanban header
+
+**Prompt:** Remove the duplicate "SouthDesk CRM" h1 title from KanbanBoard header since it already exists in CRMViewSwitcher header. Keep the action buttons (+ New Lead, View All).
+
+**Result:** Removed h1 title element from KanbanBoard component. Header now displays only the action buttons (+ New Lead, View All) which remain useful for the kanban view functionality.
+
+**Adjustment:** No adjustment needed. Clean removal without affecting any functionality.
+
+---
+
 ## [Commit db82b59] — Add table view alongside kanban with shared data source
 
 **Prompt:** Add a CRM List View (Table View) alongside existing Kanban WITHOUT breaking Kanban functionality. Both views must consume same single source of truth. Keep Kanban logic untouched. Safe, production-grade approach.
